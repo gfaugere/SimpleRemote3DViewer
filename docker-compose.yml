@@ -1,17 +1,25 @@
 version: '3'
 services:
 
-  nginx:
+  sr3dv-nginx:
     image: nginx
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./public:/usr/share/nginx/html
     ports:
      - '8080:80'
+    networks: 
+     - sr3dv
   
-  php:
+  sr3dv-php:
     image: php:8-fpm-alpine
     volumes:
       - ./src:/opt/src
       - ./public/objects:/opt/uploads
       - ./php.ini:/usr/local/etc/php/conf.d/uploads.ini
+    networks: 
+     - sr3dv
+
+networks: 
+  sr3dv:
+    internal: true
