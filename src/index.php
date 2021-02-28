@@ -43,16 +43,18 @@ foreach ($files as $timestamp => $file) {
 
 // Then process upload
 $userFileName = basename($_FILES['file']['name']);
-if (1 !== preg_match("/\.(obj|stl)$/", $userFileName)) {
+if (1 !== preg_match("/\.(obj|stl)$/", $userFileName, $matches)) {
     http_response_code(400);
     echo 'File must be stl or obj';
     return;
 }
 
-if (false === move_uploaded_file($_FILES['file']['tmp_name'], UPLOAD_DIR . '/' . $userFileName)) {
+$resultFileName = uniqid('', true) . $matches[0];
+
+if (false === move_uploaded_file($_FILES['file']['tmp_name'], UPLOAD_DIR . '/' . $resultFileName)) {
     http_response_code(500);
     return;
 }
 
 http_response_code(201);
-header('Location: https://' . $_SERVER['HTTP_HOST'] . '/' . $userFileName);
+header('Location: https://' . $_SERVER['HTTP_HOST'] . '/' . $resultFileName);
