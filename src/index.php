@@ -37,7 +37,7 @@ $fileCount = 0;
 $timeTreshhold = time() - MAX_TIME;
 foreach ($files as $timestamp => $file) {
     if ($timestamp < $timeTreshhold || $fileCount++ > MAX_FILES) {
-        unlink($file);
+        unlink(UPLOAD_DIR . '/' . $file);
     }
 }
 
