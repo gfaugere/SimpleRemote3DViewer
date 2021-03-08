@@ -20,7 +20,7 @@ if (count($_FILES) !== 1) {
 $dir = opendir(UPLOAD_DIR);
 $files = [];
 while (false !== ($file = readdir($dir))) {
-    if ('file' !== filetype(UPLOAD_DIR . '/' . $file)) {
+    if ('file' !== filetype(UPLOAD_DIR . '/' . $file) || '.gitignore' === $file) {
         continue;
     }
     $time = filemtime(UPLOAD_DIR . '/' . $file);
